@@ -3,7 +3,10 @@ import HomeView from '../views/HomeView.vue'
 import SponsorView from '../views/SponsorView.vue'
 import EventsView from '../views/EventsView.vue'
 import Tournaments from '../views/Tournaments.vue'
+import Admin from '../views/Admin.vue'
 import Test from '../views/Test.vue'
+import Login from '../views/Login.vue'
+import SignUp from '../views/SignUp.vue'
 
 const routes = [
   {
@@ -38,6 +41,21 @@ const routes = [
     path: '/test',
     name: 'test',
     component: Test
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Admin
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignUp
   }
 ]
 

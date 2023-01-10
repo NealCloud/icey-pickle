@@ -61,10 +61,13 @@
 
         </PopoverGroup>
         <!-- Sign in Nav -->
-        <!-- <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-          <a href="#" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Sign in</a>
-          <a href="#" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-walter-primary">Sign up</a>
-        </div> -->
+        <div v-if="!user" class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+          <router-link :to="{name:'login'}" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Sign in</router-link>
+          <router-link :to="{name:'signup'}" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-walter-primary">Sign up</router-link>
+        </div>
+        <div v-if="user"  class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">          
+          <button @click="handleLogout" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Logout</button>
+        </div>
       </div>
     </div>
 
@@ -131,44 +134,62 @@ import {
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { useRouter } from 'vue-router'
+import { auth } from '../firebase/config'
+import {signOut} from 'firebase/auth'
+import getUser from '../composables/getUser'
+import { watchEffect } from '@vue/runtime-core'
 
 export default{
     components:{
         Popover, PopoverButton, PopoverGroup, PopoverPanel, Bars3Icon, ChevronDownIcon, XMarkIcon
     },
     setup(){
-        const mobileList = [
-            { 
-                name: 'Walter Lau',
-                href: 'about',
-                icon: LifebuoyIcon,
-                id: 1
-            },
-            {
-                name: 'Sponsors',
-                href: 'sponsor',
-                icon: ShieldCheckIcon,
-                id: 2
-            },
-            {
-                name: 'Events',
-                href: 'events',
-                icon: CalendarIcon,
-                id: 3
-            },
-            {
-                name: 'Tournaments',
-                href: 'tournaments',
-                icon: ShieldCheckIcon,
-                id: 4
-            }
-        ]
+      const {user} = getUser()
+      const router = useRouter()
+
+      const handleLogout = () => {     
+        signOut(auth)
+        router.push('/Login') 
+      }
+
+      watchEffect(()=>{
+        if(!user.value){
+          console.log('user switch')
+        }
+      }) 
+
+      const mobileList = [
+        { 
+            name: 'Walter Lau',
+            href: 'about',
+            icon: LifebuoyIcon,
+            id: 1
+        },
+        {
+            name: 'Sponsors',
+            href: 'sponsor',
+            icon: ShieldCheckIcon,
+            id: 2
+        },
+        {
+            name: 'Events',
+            href: 'events',
+            icon: CalendarIcon,
+            id: 3
+        },
+        {
+            name: 'Tournaments',
+            href: 'tournaments',
+            icon: ShieldCheckIcon,
+            id: 4
+        }
+      ]
         
-            const callsToAction = [
-                // { name: 'Watch Demo', href: '#', icon: PlayIcon },
-                // { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-            ]
-        const resources = [
+        const callsToAction = [
+            // { name: 'Watch Demo', href: '#', icon: PlayIcon },
+            // { name: 'Contact Sales', href: '#', icon: PhoneIcon },
+        ]
+      const resources = [
         {
             name: 'Help Center',
             description: 'Get all of your questions answered in our forums or contact support.',
@@ -188,25 +209,24 @@ export default{
             icon: CalendarIcon,
         },
         { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
-        ]
-        const recentPosts = [
-            { id: 1, name: 'Boost your conversion rate', href: '#' },
-            { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
-            { id: 3, name: 'Improve your customer experience', href: '#' },
-        ]
-        const router = useRouter();
+      ]
+      const recentPosts = [
+        { id: 1, name: 'Boost your conversion rate', href: '#' },
+        { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
+        { id: 3, name: 'Improve your customer experience', href: '#' },
+      ]
+      
 
-        const handleNavClick = (togo)=>{
-            console.log('going to ' + togo)            
-            router.push({name: togo})
-        }
-        const accept = (close)=> {        
-            close()
-        }
-        
-
-        return {recentPosts, callsToAction, resources, mobileList, handleNavClick, accept}
-    }
+      const handleNavClick = (togo)=>{
+        console.log('going to ' + togo)            
+        router.push({name: togo})
+      }
+      const accept = (close)=> {        
+          close()
+      }        
+      
+      return {recentPosts, callsToAction, resources, mobileList, handleNavClick, accept, handleLogout, user}
+  }
 }
 
 
