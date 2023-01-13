@@ -32,15 +32,15 @@ export default {
   setup() {
     const {user} = getUser()
     // const { documents:books } = getCollection('members', ['userUid', '==', user.value.uid]) 
-    const { documents:members } = getCollection('members')    
+    const { documents:members } = getCollection('waltermlp')    
     
     const handleDelete = (id)=>{
-      const docRef = doc(db, 'members', id)
+      const docRef = doc(db, 'waltermlp', id)
       deleteDoc(docRef)         
     }
 
     const handleUpdate = (member)=>{
-      const docRef = doc(db, 'members', member.id)
+      const docRef = doc(db, 'waltermlp', member.id)
       updateDoc(docRef, { isFav: !member.isFav })
     }
 

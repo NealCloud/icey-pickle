@@ -8,6 +8,19 @@ import Test from '../views/Test.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 
+import { auth} from '../firebase/config'
+
+const requireAuth = (to, from, next) =>{
+  let user = auth.currentUser
+  
+  if (!user) {
+    //redirect them
+    next({name: 'login'})
+  }else{
+    next()
+  }
+}
+
 const routes = [
   {
     path: '/',
@@ -45,7 +58,8 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: Admin
+    component: Admin,
+    beforeEnter: requireAuth
   },
   {
     path: '/login',

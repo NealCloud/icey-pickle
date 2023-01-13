@@ -12,6 +12,7 @@
     <input type="text" name="email" v-model="email" required>
 
     <button>Add Member</button>
+    
   </form>
 </template>
 
@@ -29,7 +30,7 @@ export default {
     const {user} = getUser()
 
     const handleSubmit = async () => {
-      const colRef = collection(db, 'members')
+      const colRef = collection(db, 'waltermlp')
 
       await addDoc(colRef, {
         first: first.value,
