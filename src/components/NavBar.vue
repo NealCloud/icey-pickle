@@ -97,7 +97,7 @@
             </div>
           </div>
           <!-- Login Mobile -->
-          <!-- <div class="space-y-6 py-6 px-5">
+          <div class="space-y-6 py-6 px-5">
            
             <div>
               <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-walter-primary">Sign up</a>
@@ -107,7 +107,7 @@
                 <a href="#" class="text-black hover:text-walter-primary">Log in</a>
               </p>
             </div>
-          </div> -->
+          </div>
         </div>
       </PopoverPanel>
     </transition>

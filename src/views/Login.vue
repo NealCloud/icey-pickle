@@ -1,16 +1,4 @@
 <template>
-  <!-- <form @submit.prevent="handleSubmit">
-    <h2>Login</h2>
-
-    <label for="email">Email:</label>
-    <input type="email" name="email" v-model="email" required>
-
-    <label for="password">Password:</label>
-    <input type="password" name="password" v-model="password" required>
-
-    <button>Login</button>
-    <div v-if="error">{{error}}</div>
-  </form> -->
 
    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">
@@ -67,6 +55,7 @@ import { useRouter } from 'vue-router'
 import { LockClosedIcon } from '@heroicons/vue/20/solid'
 
 export default {
+  components:{ LockClosedIcon },
   setup() {
     const email = ref('')
     const password = ref('')
