@@ -25,7 +25,7 @@
          <li>
             <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
-               <span class="flex-1 ml-3 whitespace-nowrap">Waitlist</span>
+               <span class="flex-1 ml-3 whitespace-nowrap">MLP Waitlist</span>
                <span class="inline-flex items-center justify-center  h-3 p-3 ml-3 text-sm font-medium text-blue-600 bg-walter-primary rounded-full dark:bg-blue-900 dark:text-blue-200">300</span>
             </a>
          </li>
@@ -88,29 +88,23 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Email
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Account
-                </th>
+                </th>                
                 <th scope="col" class="px-6 py-3">
                     Edit
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
+            <tr v-for="member in memberTest" :key=member.id class="bg-white border-b hover:bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4  font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{member.first}}
                 </th>
                 <td class="px-6 py-4">
-                    Sliver
+                    {{member.last}}
                 </td>
                 <td class="px-6 py-4">
-                    Laptop
-                </td>
-                <td class="px-6 py-4">
-                    $2999
-                </td>
+                    {{member.email}}
+                </td>               
                 <td class="px-6 py-4">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
@@ -124,10 +118,7 @@
                 </td>
                 <td class="px-6 py-4">
                     Laptop PC
-                </td>
-                <td class="px-6 py-4">
-                    $1999
-                </td>
+                </td>               
                 <td class="px-6 py-4">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
@@ -141,48 +132,11 @@
                 </td>
                 <td class="px-6 py-4">
                     Accessories
-                </td>
-                <td class="px-6 py-4">
-                    $99
-                </td>
+                </td>             
                 <td class="px-6 py-4">
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
-            </tr>
-            <tr class="border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Google Pixel Phone
-                </th>
-                <td class="px-6 py-4">
-                    Gray
-                </td>
-                <td class="px-6 py-4">
-                    Phone
-                </td>
-                <td class="px-6 py-4">
-                    $799
-                </td>
-                <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple Watch 5
-                </th>
-                <td class="px-6 py-4">
-                    Red
-                </td>
-                <td class="px-6 py-4">
-                    Wearables
-                </td>
-                <td class="px-6 py-4">
-                    $999
-                </td>
-                <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
+            </tr>         
         </tbody>
     </table>
 </div>
@@ -205,12 +159,15 @@ import {onMounted, ref} from 'vue'
 export default {
     setup(){
         const dropDowner = ref(['mario', 'lugio', 'peach'])
-
+        const memberTest = ref([
+            {id: 1, first: 'billy', last: 'gaonzo', email: 'ger@gmail.com'},            
+            {id: 2, first: 'bozo', last: 'sfeged', email: 'gdfeer@gmail.com'}
+        ])
 
 
         onMounted(()=>{ initTooltips(), initDropdowns();})
 
-        return {dropDowner}
+        return {dropDowner, memberTest}
     }    
 }
 </script>
