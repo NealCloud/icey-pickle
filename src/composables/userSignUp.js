@@ -5,6 +5,7 @@ import{ createUserWithEmailAndPassword} from 'firebase/auth'
 
 const error = ref(null)
 const isPending = ref(false)
+const user = ref(null)
 
 const signup = async (email, password) => {
     error.value = null
@@ -15,6 +16,7 @@ const signup = async (email, password) => {
         if(!res){
             throw new Error('Could not compelte signup')
         }
+        user.value = res.user
         error.value = null
         isPending.value = false
     }
@@ -26,7 +28,7 @@ const signup = async (email, password) => {
 }
 
 const useSignup = () =>{
-    return{ error, isPending, signup}
+    return{ user, error, isPending, signup}
 }
 
 export default useSignup

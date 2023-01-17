@@ -103,15 +103,15 @@ export default {
     const {user} = getUser()
     const selectedPerson = ref("Heya")
     // const { documents:books } = getCollection('members', ['userUid', '==', user.value.uid]) 
-    const { documents:members } = getCollection('waltermlp')    
+    const { documents:members } = getCollection('walterMlp')    
     
     const handleDelete = (id)=>{
-      const docRef = doc(db, 'waltermlp', id)
+      const docRef = doc(db, 'walterMlp', id)
       deleteDoc(docRef)         
     }
 
     const handleUpdate = (member)=>{
-      const docRef = doc(db, 'waltermlp', member.id)
+      const docRef = doc(db, 'walterMlp', member.id)
       updateDoc(docRef, { isFav: !member.isFav })
     }
 

@@ -30,13 +30,14 @@ export default {
     const {user} = getUser()
 
     const handleSubmit = async () => {
-      const colRef = collection(db, 'waltermlp')
+      const colRef = collection(db, 'walterMlp')
 
       await addDoc(colRef, {
         first: first.value,
         last: last.value,
         email: email.value,
         isConfirmed: false,
+        userId: null,
         admin: user.value.uid
       })
 

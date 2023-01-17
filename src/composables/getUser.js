@@ -7,7 +7,13 @@ const user =   ref(auth.currentUser)
 // auth changes
 onAuthStateChanged(auth,(_user) => {
     user.value = _user
-    console.log("user state change. current user is: ",  _user.uid)
+    if(user.value){
+        console.log("user state change. current user is: ",  _user.uid)
+    }
+    else{
+        console.log("logged out")
+    }
+    
 } )
 
 const getUser = () =>{

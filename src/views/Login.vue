@@ -25,9 +25,9 @@
         </div>
 
         <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-walter-primary focus:ring-walter-primary" />
-            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+          <div v-if="errorMessage" class="flex items-center">
+            <span class="flex w-3 h-3 bg-red-500 rounded-full"></span>
+            <label for="remember-me" class="ml-2 block text-sm text-gray-900">{{errorMessage}}</label>
           </div>
 
           <!-- <div class="text-sm">
@@ -59,6 +59,7 @@ export default {
   setup() {
     const email = ref('')
     const password = ref('')
+    const errorMessage = ref(null)
     const {login, error, isPending} = userLogin()
     const router = useRouter()
 
@@ -66,11 +67,15 @@ export default {
       await login(email.value, password.value)
       if(!error.value){
        router.push({name:'home'})
-      }   
+      } 
+      
+      if(error.value){
+        errorMessage.value = "wrong password or email"
+      }
       
     }
 
-    return { email, isPending, error, password, handleSubmit }
+    return { email, isPending, error, errorMessage, password, handleSubmit }
   }
 }
 </script>

@@ -19,6 +19,7 @@
         <PopoverGroup as="nav" class="hidden space-x-10 md:flex">
           
           <router-link v-for="nav in mobileList" :key="nav.id" :to="{name:nav.href}" class="text-base font-medium text-gray-900 hover:text-walter-primary">{{nav.name}}</router-link>
+          <router-link v-if="navAdmin" :to="{name:'admin'}" class="text-base font-medium text-gray-900 hover:text-walter-primary">Admin</router-link>
           <!-- More Menu Options -->
           <!-- <Popover class="relative" v-slot="{ open }">
             <PopoverButton :class="[open ? 'text-gray-900' : 'text-gray-500', 'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2']">
@@ -92,20 +93,27 @@
                 <router-link v-for="item in mobileList" :key="item.name" @click="accept(close)" :to="{name:item.href}"   class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50">
                   <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-walter-primary" aria-hidden="true" />
                   <span    class="ml-3 text-base font-medium text-gray-900">{{ item.name }}</span>
-                </router-link>
+                </router-link>               
               </nav>
             </div>
           </div>
           <!-- Login Mobile -->
-          <div class="space-y-6 py-6 px-5">
+          <div class="space-y-6 py-6 px-5" v-if="!user">
            
             <div>
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-walter-primary">Sign up</a>
+              <router-link to="signup"  @click="accept(close)" class="flex w-full items-center justify-center rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-walter-primary">Sign up</router-link>
               <p class="mt-6 text-center text-base font-medium text-gray-500">
                 Already signed up?
                 {{ ' ' }}
-                <a href="#" class="text-black hover:text-walter-primary">Log in</a>
+                <router-link to="login" @click="accept(close)" class="text-black hover:text-walter-primary">Log in</router-link>
               </p>
+            </div>
+          </div>
+           <div class="space-y-6 py-6 px-5" v-if="user">
+           
+            <div>
+              <a   @click="accept(close, true)" class="flex w-full items-center justify-center rounded-md border border-transparent bg-black px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-walter-primary">Logout</a>
+
             </div>
           </div>
         </div>
@@ -137,7 +145,7 @@ import { useRouter } from 'vue-router'
 import { auth } from '../firebase/config'
 import {signOut} from 'firebase/auth'
 import getUser from '../composables/getUser'
-import { watchEffect } from '@vue/runtime-core'
+import { ref, watchEffect } from '@vue/runtime-core'
 
 export default{
     components:{
@@ -146,15 +154,21 @@ export default{
     setup(){
       const {user} = getUser()
       const router = useRouter()
+      const navAdmin = ref(false)
 
       const handleLogout = () => {     
         signOut(auth)
         router.push('/Login') 
-      }
+      }      
 
       watchEffect(()=>{
         if(!user.value){
           console.log('user switch')
+          navAdmin.value = false
+        }
+        else{
+          if(user.value.uid == '37gKEAuWzfYbDk5d1Fq0aR158Oh2')
+          navAdmin.value = true
         }
       }) 
 
@@ -221,11 +235,14 @@ export default{
         console.log('going to ' + togo)            
         router.push({name: togo})
       }
-      const accept = (close)=> {        
+      const accept = (close, mobile)=> {        
           close()
+          if(mobile){
+            handleLogout();
+          }
       }        
       
-      return {recentPosts, callsToAction, resources, mobileList, handleNavClick, accept, handleLogout, user}
+      return {recentPosts, callsToAction, resources, mobileList, navAdmin, handleNavClick, accept, handleLogout, user}
   }
 }
 
