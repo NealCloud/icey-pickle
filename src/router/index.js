@@ -7,6 +7,7 @@ import Admin from '../views/Admin.vue'
 import Test from '../views/Test.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
+import DuprClub from '../views/DuprClub.vue'
 
 import { auth} from '../firebase/config'
 
@@ -70,6 +71,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignUp
+  },
+  {
+    path: '/duprclub',
+    name: 'duprclub',
+    component: DuprClub
   }
 ]
 
