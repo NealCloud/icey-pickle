@@ -86,7 +86,7 @@ export default {
     const handleSubmit = async () => {
       await signup(email.value, password.value)
       if(!error.value){
-        const colRef = doc(db, 'waitlistMlp', user.value.uid)
+        const colRef = doc(db, 'users', user.value.uid)
 
         await setDoc(colRef, {
           first: first.value,

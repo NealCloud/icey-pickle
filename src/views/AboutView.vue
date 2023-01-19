@@ -52,9 +52,10 @@
       </div>      
       <div class="text  p-3 bg-walter-primary col-span-1 row-span-3 my-1">        
             <p>Pickleball Pro</p>
-            <span> Fairbanks Ranch Country Club </span><br>
-             <i class='fab fa-d-and-d'></i>
-            <p>Bay Club of Carmel Valley</p>
+            <span> Fairbanks Ranch Country Club, </span><br>             
+            <p>Bay Club of Carmel Valley,</p>
+            <i class='fab fa-d-and-d'></i>
+            <p>The Bridges Country Club at Rancho Santa Fe</p>
             <span> </span>
       </div>
     </div>

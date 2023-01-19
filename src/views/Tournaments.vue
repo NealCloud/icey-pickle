@@ -100,19 +100,19 @@ export default {
     const myVideo = ref(null)
     const router = useRouter()
     const tournaList = ref([
-        {
-            title:"The Hyundai Masters - Mission Hills, CA ",
-            pic: masterPic,
-            date:"January 12-15, 2023",
-            divs: [ {pro:"1/12 - Men's Singles Pro "},
-             {pro:"1/13 - Mixed Doubles Pro"},
-             {pro:"1/15 - Men's Doubles Pro"}
-             ],
-            urlMain: "https://www.ppatour.com/events/the-masters/",
-            urlMap: "https://www.google.com/maps?q=34600+Mission+Hills+Drive+Rancho+Mirage,+CA,+92270+United+States",
-            endBlurb: "",
-            id: 1
-        },
+        // {
+        //     title:"The Hyundai Masters - Mission Hills, CA ",
+        //     pic: masterPic,
+        //     date:"January 12-15, 2023",
+        //     divs: [ {pro:"1/12 - Men's Singles Pro "},
+        //      {pro:"1/13 - Mixed Doubles Pro"},
+        //      {pro:"1/15 - Men's Doubles Pro"}
+        //      ],
+        //     urlMain: "https://www.ppatour.com/events/the-masters/",
+        //     urlMap: "https://www.google.com/maps?q=34600+Mission+Hills+Drive+Rancho+Mirage,+CA,+92270+United+States",
+        //     endBlurb: "",
+        //     id: 1
+        // },
         {
             title:"The Carvana Arizona Grand Slam - Mesa, AZ ",
             pic: arizonaPic,
