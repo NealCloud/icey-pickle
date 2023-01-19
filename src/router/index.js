@@ -8,6 +8,7 @@ import Test from '../views/Test.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 import DuprClub from '../views/DuprClub.vue'
+import Thankyou from '../views/Thankyou.vue'
 
 import { auth} from '../firebase/config'
 
@@ -76,6 +77,12 @@ const routes = [
     path: '/duprclub',
     name: 'duprclub',
     component: DuprClub
+  },
+  {
+    path: '/thankyou',
+    name: 'thankyou',
+    component: Thankyou,
+    props: true
   }
 ]
 

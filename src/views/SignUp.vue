@@ -43,9 +43,11 @@
         </div>
 
         <div class="flex items-center justify-between">
-          
           <div class="flex items-center">
-            <!-- <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-walter-primary focus:ring-walter-primary" /> -->
+            <input v-model="joinClub" id="remember-me" name="remember-me" type="checkbox" checked="true" class="h-4 w-4 rounded border-gray-300 text-walter-primary focus:ring-walter-primary" />
+            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Add me to Walter's Pickleball DUPR Club</label>
+          </div>
+          <div class="flex items-center">            
             <label for="remember-me" class="ml-2 block text-sm text-gray-900">{{error}}</label>
           </div>
 
@@ -61,6 +63,10 @@
           </button>
         </div>
       </form>
+      <!-- <button @click="testSubmit" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:bg-walter-primary focus:outline-none focus:ring-2 focus:ring-walter-primary focus:ring-offset-2">
+            
+            test Account
+          </button> -->
     </div>
   </div>
 </template>
@@ -79,6 +85,7 @@ export default {
     const password = ref('')
     const first = ref('')
     const last = ref('')
+    const joinClub = ref(true)
     
     const {signup, error, isPending, user} = useSignup()
     const router = useRouter()
@@ -92,20 +99,26 @@ export default {
           first: first.value,
           last: last.value,
           email: email.value,
-          isConfirmed: false,
+          joinClub: joinClub.value,
           userId: user.value.uid,
           admin: user.value.uid
         })        
        
-       router.push({name:'home'})
+       router.push({name:'thankyou'})
 
       }   
       
     }
 
+    const testSubmit = () =>{
+      router.push({
+            name:'thankyou',  params: { firstName: "Terry"  }
+          })
+    }
+
     
 
-    return { email, isPending, password, first, last, error, handleSubmit }
+    return { email, isPending, password, first, last, error, handleSubmit, testSubmit, joinClub }
   }
 }
 </script>
