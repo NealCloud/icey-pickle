@@ -15,6 +15,7 @@ const getCollection = (c, q) =>{
       let results = []
       snapshot.docs.forEach(doc => {
         results.push({ ...doc.data(), id: doc.id})
+        console.log("reading ++")
       })
       documents.value = results
     })

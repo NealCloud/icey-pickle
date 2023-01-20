@@ -101,7 +101,8 @@ import { db } from '@/firebase/config'
 
 export default {
     setup(){
-        const { documents:members } = getCollection('walterMlp') 
+        // const { documents:members } = getCollection('walterMlp') 
+        const members = [{id: 1, email: 'df', first: 'hey', last: 'mark', phone: 123}]
         const first = ref('')
         const last = ref('')
         const email = ref('')

@@ -163,7 +163,10 @@ export default {
             {id: 1, first: 'billy', last: 'gaonzo', email: 'ger@gmail.com'},            
             {id: 2, first: 'bozo', last: 'sfeged', email: 'gdfeer@gmail.com'}
         ])
+        
+        const keymaster = Object.keys(memberTest.value[0])
 
+        console.log(keymaster)
 
         onMounted(()=>{ initTooltips(), initDropdowns();})
 
