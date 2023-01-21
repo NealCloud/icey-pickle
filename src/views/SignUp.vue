@@ -1,15 +1,4 @@
 <template>
-  <!-- <form @submit.prevent="handleSubmit">
-    <h2>Sign up</h2>
-
-    <label for="email">Email:</label>
-    <input type="email" name="email" v-model="email" required>
-
-    <label for="password">Password:</label>
-    <input type="password" name="password" v-model="password" required>
-
-    <button v-if="!isPending" >Sign up</button>
-  </form> -->
     <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8">
       <div>
@@ -50,7 +39,6 @@
           <div class="flex items-center">            
             <label for="remember-me" class="ml-2 block text-sm text-gray-900">{{error}}</label>
           </div>
-
           <!-- <div class="text-sm">
             <a class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
           </div> -->
@@ -63,8 +51,7 @@
           </button>
         </div>
       </form>
-      <!-- <button @click="testSubmit" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:bg-walter-primary focus:outline-none focus:ring-2 focus:ring-walter-primary focus:ring-offset-2">
-            
+      <!-- <button @click="testSubmit" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:bg-walter-primary focus:outline-none focus:ring-2 focus:ring-walter-primary focus:ring-offset-2">       
             test Account
           </button> -->
     </div>
@@ -75,7 +62,7 @@
 import { ref } from 'vue'
 import useSignup from '../composables/userSignUp'
 import { useRouter } from 'vue-router'
-import { doc, setDoc } from '@firebase/firestore'
+import { doc, serverTimestamp, updateDoc } from '@firebase/firestore'
 import { db } from '@/firebase/config'
 
 
@@ -86,37 +73,72 @@ export default {
     const first = ref('')
     const last = ref('')
     const joinClub = ref(true)
+    const newUser = ref(null)
     
     const {signup, error, isPending, user} = useSignup()
     const router = useRouter()
 
-    const handleSubmit = async () => {
-      await signup(email.value, password.value)
-      if(!error.value){
-        const colRef = doc(db, 'users', user.value.uid)
+    const userListRef = doc(db, "users", "mainList");
+    const waitListRef = doc(db, "waitlistMlp", "mainList");
+    // const handleSubmit = async () => {
+    //   await signup(email.value, password.value)
+    //   if(!error.value){
+    //     const colRef = doc(db, 'users', user.value.uid)
 
-        await setDoc(colRef, {
-          first: first.value,
-          last: last.value,
-          email: email.value,
-          joinClub: joinClub.value,
-          userId: user.value.uid,
-          admin: user.value.uid
-        })        
+    //     await setDoc(colRef, {
+    //       first: first.value,
+    //       last: last.value,
+    //       email: email.value,
+    //       joinClub: joinClub.value,
+    //       userId: user.value.uid,
+    //       admin: user.value.uid
+    //     })        
        
-       router.push({name:'thankyou'})
+    //    router.push({name:'thankyou'})
 
-      }   
+    //   }   
       
-    }
+    // }
+
+    const handleSubmit = async () => {
+            await signup(email.value, password.value)            
+            //create new todo key data
+             newUser.value = {
+                [user.value.uid] : {
+                    first: first.value,
+                    last: last.value,
+                    email: email.value,
+                    joinClub: joinClub.value,
+                    userid: user.value.uid,
+                    joined: serverTimestamp(),
+                    admin: 'false'
+                } 
+            }
+            //update firestore todo field
+            await updateDoc(userListRef, 
+                 newUser.value
+            ) 
+            //if join club add to waitlist
+            if(joinClub.value){
+               await updateDoc(waitListRef, {
+                  [user.value.uid] : 
+                    {
+                      name: first.value + " " + last.value,
+                      email: email.value,
+                      userid: user.value.uid                 
+                    }                  
+                  }
+                )   
+            }
+           
+            router.push({name:'thankyou'})           
+        }
 
     const testSubmit = () =>{
       router.push({
             name:'thankyou',  params: { firstName: "Terry"  }
           })
-    }
-
-    
+    }    
 
     return { email, isPending, password, first, last, error, handleSubmit, testSubmit, joinClub }
   }

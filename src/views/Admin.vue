@@ -46,7 +46,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a href="#" @click="dashboardSelect(dashboardKeys.userList)" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
                 </a>
@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a href="#" @click="dashboardSelect(dashboardKeys.eventsList)" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">Events</span>
                 </a>
@@ -89,7 +89,12 @@
    <div v-if="dashboardBools.todoList" class="col-span-9">
     <TodoList/>
   </div>
-
+  <div v-if="dashboardBools.eventsList" class="col-span-9">
+    <EventsList/>
+  </div>
+  <div v-if="dashboardBools.userList" class="col-span-9">
+    <UserList/>
+  </div>
 </div>
 
 
@@ -100,6 +105,8 @@
 import AddMember from '@/components/AddMember'
 import MLPmembers from '@/components/MLPmembers.vue'
 import TodoList from '@/components/TodoList.vue'
+import EventsList from '@/components/EventsList.vue'
+import UserList from '@/components/UserList.vue'
 import getCollection from '@/composables/getCollection'
 import getUser from '../composables/getUser'
 
@@ -118,14 +125,14 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
 export default {
   name: 'Home',
-  components: { MLPmembers, TodoList  },
+  components: { MLPmembers, TodoList, EventsList, UserList  },
   
   
 
 
   setup() {
-    const dashboardBools = ref({mlpMembersList : true, todoList: false})
-    const dashboardKeys = ref({mlpMembersList: 'mlp', todoList: 'todo'})
+    const dashboardBools = ref({mlpMembersList : true, todoList: false, eventsList: false, userList: false})
+    const dashboardKeys = ref({mlpMembersList: 'mlp', todoList: 'todo', eventsList: 'events', userList: 'users'})
     const {user} = getUser()
     const selectedPerson = ref("Heya")
     // const { documents:books } = getCollection('members', ['userUid', '==', user.value.uid]) 
@@ -149,10 +156,17 @@ export default {
     const dashboardSelect = (panel)=>{
       dashboardBools.value.mlpMembersList = false
       dashboardBools.value.todoList = false
+      dashboardBools.value.eventsList = false
+      dashboardBools.value.userList = false
+      
       switch(panel){
         case 'mlp':  dashboardBools.value.mlpMembersList = true;
         break;
         case 'todo': dashboardBools.value.todoList = true;
+        break;
+        case 'events': dashboardBools.value.eventsList = true;
+        break;
+        case 'users': dashboardBools.value.userList = true;
         break;
       }
     }
