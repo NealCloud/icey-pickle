@@ -86,11 +86,13 @@
   <div v-if="dashboardBools.mlpMembersList" class="col-span-9">
     <MLPmembers/>
   </div>
-   <div v-if="dashboardBools.todoList" class="col-span-9">
-    <TodoList/>
-  </div>
+  
+    <div v-if="dashboardBools.todoList" class="col-span-9" >
+      <TodoList  :todoList="todoListMain"  @update="handleDocData" @delete="handleDocData"/>
+    </div>
+  
   <div v-if="dashboardBools.eventsList" class="col-span-9">
-    <EventsList/>
+    <EventsList :test='testData'  @deletus="handleDocDelete"/>
   </div>
   <div v-if="dashboardBools.userList" class="col-span-9">
     <UserList/>
@@ -101,7 +103,7 @@
 </template>
 
 <script>
-
+import getDocument from '@/composables/getDocument'
 import AddMember from '@/components/AddMember'
 import MLPmembers from '@/components/MLPmembers.vue'
 import TodoList from '@/components/TodoList.vue'
@@ -111,7 +113,7 @@ import getCollection from '@/composables/getCollection'
 import getUser from '../composables/getUser'
 
 import {db} from '../firebase/config'
-import {doc, deleteDoc, updateDoc} from 'firebase/firestore'
+import {doc, serverTimestamp, deleteDoc, updateDoc, deleteField} from 'firebase/firestore'
 
 import { onMounted, ref } from 'vue'
 import {
@@ -127,12 +129,19 @@ export default {
   name: 'Home',
   components: { MLPmembers, TodoList, EventsList, UserList  },
   
-  
-
 
   setup() {
     const dashboardBools = ref({mlpMembersList : true, todoList: false, eventsList: false, userList: false})
     const dashboardKeys = ref({mlpMembersList: 'mlp', todoList: 'todo', eventsList: 'events', userList: 'users'})
+    const dashboardDataBools = ref({mlpMembersList : true, todoList: false, eventsList: false, userList: false})
+    const docRefHolder = ref({mlpMembersList : {}, todoList: {}, eventsList: {}, userList: {}})
+
+    const todoListMain = ref({})
+    const testData = ref([{idkey: "loading", text: 'loading', priority: '1', timestamp: new Date()}])
+    const testData2 = ref([{idkey: "beer", text: 'loading', priority: '1', timestamp: new Date()}])
+    //firestore data reads
+    const dataCalls = ref(0)
+
     const {user} = getUser()
     const selectedPerson = ref("Heya")
     // const { documents:books } = getCollection('members', ['userUid', '==', user.value.uid]) 
@@ -143,17 +152,27 @@ export default {
       deleteDoc(docRef)         
     }
 
+    
+
     const handleUpdate = (member)=>{
       const docRef = doc(db, 'walterMlp', member.id)
       updateDoc(docRef, { isFav: !member.isFav })
     }
+     
+    const loadDataDoc = async ( doc)=>{
+        const {document} = await getDocument(doc)    
+        return document.value                 
+    } 
 
     onMounted(()=>{
-      console.log('admin')
-    }
-    )
+      //console.log('welcome admin')
+    })
 
-    const dashboardSelect = (panel)=>{
+    const simLoad = ()=>{      
+      testData.value = testData2.value
+    }
+
+    const dashboardSelect = async (panel)=>{
       dashboardBools.value.mlpMembersList = false
       dashboardBools.value.todoList = false
       dashboardBools.value.eventsList = false
@@ -162,16 +181,68 @@ export default {
       switch(panel){
         case 'mlp':  dashboardBools.value.mlpMembersList = true;
         break;
-        case 'todo': dashboardBools.value.todoList = true;
+        case 'todo': dashboardBools.value.todoList = true
+        if(!dashboardDataBools.value.todoList){
+          docRefHolder.value.todoList = doc(db, 'todoList', 'mainList') 
+          todoListMain.value = await loadDataDoc(docRefHolder.value.todoList)
+          dashboardDataBools.value.todoList = true  }         
         break;
         case 'events': dashboardBools.value.eventsList = true;
+         await setTimeout(simLoad, 500)
         break;
         case 'users': dashboardBools.value.userList = true;
         break;
       }
     }
+
+    //delete a field id dynamically
+    const handleDocData = async (docRefString, fieldId)=>{
+      switch(docRefString){
+        case 'deleteTodo' : handleDocDelete(docRefHolder.value.todoList, fieldId)
+        break;
+        case 'udpateTodo' : handleNewTodo(docRefHolder.value.todoList, fieldId)
+        break;
+      }
+    }
+     //delete a field with docRef and id of field
+    const handleDocDelete = async (docRef, fieldId) =>{            
+            await updateDoc(docRef, {
+                [fieldId]: deleteField()
+            })
+           delete todoListMain.value[fieldId] 
+            dataCalls.value++                
+      }
+
+      const handleNewTodo = async (docRef, fieldObject) => {                       
+            //grab field key from object
+            let fieldKey = Object.keys(fieldObject)[0]
+            //check if its already in list
+            if(fieldKey in todoListMain.value){
+              console.log('this field key alrady taken!')
+              return
+            }
+            //update the 
+            await updateDoc(docRef, 
+                 fieldObject
+            )
+            dataCalls.value++             
+            
+            //spread new todo key to current list
+            todoListMain.value = {...todoListMain.value, 
+                [fieldKey] : {
+                    text: fieldObject[fieldKey].text,
+                    priority: fieldObject[fieldKey].priority,            
+                    isConfirmed: false,            
+                    creator: fieldObject[fieldKey].creator,
+                    timestamp: null,
+                    idkey: fieldKey
+                }                 
+            }
+            
+      }
+
     
-    return { handleUpdate, handleDelete, dashboardSelect, dashboardKeys, dashboardBools, selectedPerson}
+    return { handleUpdate, handleDelete,handleDocDelete, handleDocData, dashboardSelect,todoListMain, testData, dashboardKeys, dashboardBools, selectedPerson}
   }
 }
 </script>
