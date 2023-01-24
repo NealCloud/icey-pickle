@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in userList" :key=user.idkey class="bg-white border-b hover:bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
+                <tr v-for="user in userList" :key=user.userid class="bg-white border-b hover:bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
                     <th scope="row" class="px-6 py-4  font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{user.first + '' + user.last}} 
                     </th>
@@ -33,10 +33,13 @@
                     </td>
                     <td class="px-6 py-4">
                         <!-- {{timeLord(user.timestamp)}} ago.. -->
-                    </td>               
-                    <td class="px-6 py-4">
+                    </td> 
+                    <td class="px-6 py-4">                        
+                        <button type="button" @click="goToProfile(user.userid)"  class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Profile</button>
+                    </td>              
+                    <!-- <td class="px-6 py-4">
                         <button type="button"  @click="handleDelete(user.idkey)" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
-                    </td>
+                    </td> -->
                 </tr>         
             </tbody>
         </table>
@@ -50,12 +53,14 @@ import { deleteField, doc, getDoc, serverTimestamp, setDoc, updateDoc } from '@f
 import { db } from '@/firebase/config'
 import { onMounted } from '@vue/runtime-core'
 import { formatDistanceToNow } from 'date-fns'
+import { useRouter } from 'vue-router'
 
 
 export default {
     props: ['userList'],
     setup(props, context){
         
+        const router = useRouter()
         const docRef = doc(db, "users", "mainList");        
         //trigger the doc read on mount 
         onMounted(()=>{ console.log("user list: ", props.userList)})       
@@ -94,7 +99,14 @@ export default {
             dataCalls.value++      
         }
 
-        return { dataCalls, handleDelete, timeLord}
+        const goToProfile = (idkey)=>{
+            router.push({            
+                name:'profile',  params: { userid: idkey  }
+          })
+           
+        }
+
+        return { dataCalls, handleDelete, timeLord, goToProfile}
     }
 }
 </script>

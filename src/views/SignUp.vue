@@ -51,9 +51,9 @@
           </button>
         </div>
       </form>
-      <button @click="testSubmit" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:bg-walter-primary focus:outline-none focus:ring-2 focus:ring-walter-primary focus:ring-offset-2">       
+      <!-- <button @click="testSubmit" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:bg-walter-primary focus:outline-none focus:ring-2 focus:ring-walter-primary focus:ring-offset-2">       
             test Account
-          </button>
+          </button> -->
     </div>
   </div>
 </template>
@@ -145,7 +145,7 @@ export default {
       //             }) 
 
       router.push({            
-            name:'thankyou',  params: { name: "Terry"  }
+            name:'profile',  params: { id: "Terry"  }
           })
     }    
 
