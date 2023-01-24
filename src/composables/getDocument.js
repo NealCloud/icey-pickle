@@ -13,7 +13,7 @@ const getDocument = async (docRef)=> {
         document.value = ({ ...docSnap.data()})            
     } else {
         // doc.data() will be undefined in this case
-        console.log(docTitle + ' ' + docMap1 + ' doc does not exist');
+        console.log(' doc does not exist');
     }
 
 

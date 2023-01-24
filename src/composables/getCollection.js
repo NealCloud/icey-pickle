@@ -3,6 +3,8 @@ import { ref, watchEffect} from 'vue'
 import { db } from '../firebase/config'
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 
+//gets a Listener for collection
+
 const getCollection = (c, q) =>{
     const documents = ref(null)
 

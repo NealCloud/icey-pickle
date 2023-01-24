@@ -13,13 +13,18 @@
 </template>
 
 <script>
+import { onMounted, ref } from '@vue/runtime-core'
 import { useRoute } from 'vue-router'
 export default {   
     setup(){
 
-        const route = useRoute();
-        console.log(route.params)
-        return {}
+		const firstName = ref('')
+        const route = useRoute()
+		onMounted(()=>{
+			firstName.value = route.params.name
+		})
+        
+        return {firstName}
     }
 }
 </script>

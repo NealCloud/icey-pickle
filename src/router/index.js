@@ -9,6 +9,7 @@ import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 import DuprClub from '../views/DuprClub.vue'
 import Thankyou from '../views/Thankyou.vue'
+import Profile from '../views/Profile.vue'
 
 
 import { auth} from '../firebase/config'
@@ -80,11 +81,17 @@ const routes = [
     component: DuprClub
   },
   {
-    path: '/thankyou',
+    path: '/thankyou/:name',
     name: 'thankyou',
     component: Thankyou,
     props: true
-  }
+  },
+  {
+    path: '/profile/:id',
+    name: 'profile',
+    component: Profile,
+    props: true
+  },
 ]
 
 const router = createRouter({

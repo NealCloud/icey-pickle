@@ -51,9 +51,9 @@
           </button>
         </div>
       </form>
-      <!-- <button @click="testSubmit" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:bg-walter-primary focus:outline-none focus:ring-2 focus:ring-walter-primary focus:ring-offset-2">       
+      <button @click="testSubmit" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white hover:bg-walter-primary focus:outline-none focus:ring-2 focus:ring-walter-primary focus:ring-offset-2">       
             test Account
-          </button> -->
+          </button>
     </div>
   </div>
 </template>
@@ -62,7 +62,7 @@
 import { ref } from 'vue'
 import useSignup from '../composables/userSignUp'
 import { useRouter } from 'vue-router'
-import { doc, serverTimestamp, updateDoc } from '@firebase/firestore'
+import { doc, FieldValue, serverTimestamp, setDoc, updateDoc } from '@firebase/firestore'
 import { db } from '@/firebase/config'
 
 
@@ -78,13 +78,14 @@ export default {
     const {signup, error, isPending, user} = useSignup()
     const router = useRouter()
 
-    const userListRef = doc(db, "users", "mainList");
-    const waitListRef = doc(db, "waitlistMlp", "mainList");
+    const userQuickListRef = doc(db, "userRef", "mainList");    
+    const waitListRef = doc(db, "waitList", "mainList");
+    const countersRef = doc(db, 'dataCounter', 'counters')
+
     // const handleSubmit = async () => {
     //   await signup(email.value, password.value)
     //   if(!error.value){
     //     const colRef = doc(db, 'users', user.value.uid)
-
     //     await setDoc(colRef, {
     //       first: first.value,
     //       last: last.value,
@@ -92,51 +93,59 @@ export default {
     //       joinClub: joinClub.value,
     //       userId: user.value.uid,
     //       admin: user.value.uid
-    //     })        
-       
+    //     })      
     //    router.push({name:'thankyou'})
-
     //   }   
-      
     // }
 
-    const handleSubmit = async () => {
-            await signup(email.value, password.value)            
+    const handleSubmit = async () => { 
+            await signup(email.value, password.value) 
+            if(!error.value){            
+            let mainListRef = doc(db, "users", user.value.uid)
             //create new todo key data
-             newUser.value = {
-                [user.value.uid] : {
+             newUser.value = {                 
                     first: first.value,
                     last: last.value,
                     email: email.value,
                     joinClub: joinClub.value,
                     userid: user.value.uid,
                     joined: serverTimestamp(),
-                    admin: 'false'
-                } 
+                    admin: 'false'               
             }
+            await setDoc(mainListRef, newUser.value )
             //update firestore todo field
-            await updateDoc(userListRef, 
-                 newUser.value
+            await updateDoc(userQuickListRef, 
+                 {[user.value.uid] : {...newUser.value} }
             ) 
             //if join club add to waitlist
             if(joinClub.value){
-               await updateDoc(waitListRef, {
-                  [user.value.uid] : 
+               await updateDoc(waitListRef, 
+                {[user.value.uid] : 
                     {
                       name: first.value + " " + last.value,
                       email: email.value,
                       userid: user.value.uid                 
                     }                  
-                  }
-                )   
+                  }                  
+                )                 
             }
+            // else{
+            //   await updateDoc(countersRef, {
+            //         users:  FieldValue.increment(1)                                   
+            //       }) 
+            // }
            
-            router.push({name:'thankyou'})           
+              router.push({name:'thankyou'}) 
+            }          
         }
 
-    const testSubmit = () =>{
-      router.push({
-            name:'thankyou',  params: { firstName: "Terry"  }
+    const testSubmit = async() =>{
+      //  await updateDoc(countersRef, {
+      //               users:  FieldValue.increment(1)                                   
+      //             }) 
+
+      router.push({            
+            name:'thankyou',  params: { name: "Terry"  }
           })
     }    
 

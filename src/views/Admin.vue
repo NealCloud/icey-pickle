@@ -73,14 +73,8 @@
       </div>
     </aside>
 
-
     </div>
-
-
-
     <!-- Dropdown menu -->
-
-
   </div>
 
   <div v-if="dashboardBools.mlpMembersList" class="col-span-9">
@@ -95,10 +89,9 @@
     <EventsList :test='testData'  @deletus="handleDocDelete"/>
   </div>
   <div v-if="dashboardBools.userList" class="col-span-9">
-    <UserList/>
+    <UserList :userList="userListMain"/>
   </div>
 </div>
-
 
 </template>
 
@@ -137,6 +130,8 @@ export default {
     const docRefHolder = ref({mlpMembersList : {}, todoList: {}, eventsList: {}, userList: {}})
 
     const todoListMain = ref({})
+    const userListMain = ref({})
+
     const testData = ref([{idkey: "loading", text: 'loading', priority: '1', timestamp: new Date()}])
     const testData2 = ref([{idkey: "beer", text: 'loading', priority: '1', timestamp: new Date()}])
     //firestore data reads
@@ -150,9 +145,7 @@ export default {
     const handleDelete = (id)=>{
       const docRef = doc(db, 'walterMlp', id)
       deleteDoc(docRef)         
-    }
-
-    
+    }    
 
     const handleUpdate = (member)=>{
       const docRef = doc(db, 'walterMlp', member.id)
@@ -160,18 +153,19 @@ export default {
     }
      
     const loadDataDoc = async ( doc)=>{
-        const {document} = await getDocument(doc)    
+        const {document} = await getDocument(doc)  
+        
         return document.value                 
     } 
-
     onMounted(()=>{
       //console.log('welcome admin')
     })
 
+    //delete this event page simulator
     const simLoad = ()=>{      
       testData.value = testData2.value
     }
-
+    //Handles dashboard components limiting data to one time while on admin page
     const dashboardSelect = async (panel)=>{
       dashboardBools.value.mlpMembersList = false
       dashboardBools.value.todoList = false
@@ -191,6 +185,10 @@ export default {
          await setTimeout(simLoad, 500)
         break;
         case 'users': dashboardBools.value.userList = true;
+        if(!dashboardDataBools.value.userList){
+          docRefHolder.value.userList = doc(db, 'userRef', 'mainList') 
+          userListMain.value = await loadDataDoc(docRefHolder.value.userList)
+          dashboardDataBools.value.userList = true  } 
         break;
       }
     }
@@ -242,7 +240,7 @@ export default {
       }
 
     
-    return { handleUpdate, handleDelete,handleDocDelete, handleDocData, dashboardSelect,todoListMain, testData, dashboardKeys, dashboardBools, selectedPerson}
+    return { handleUpdate, handleDelete,handleDocDelete, handleDocData, dashboardSelect,todoListMain, testData, userListMain, dashboardKeys, dashboardBools, selectedPerson}
   }
 }
 </script>
