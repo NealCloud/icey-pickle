@@ -17,11 +17,8 @@
   </div> -->
   
 <div class="grid grid-cols-12">
-
   <div class="col-span-3">
-
-    <div>
-        
+    <div>        
     <aside class="w-80" aria-label="Sidebar">
       <div class="px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800">
           <ul class="space-y-2">
@@ -29,26 +26,28 @@
                 <a href="#" @click="dashboardSelect(dashboardKeys.todoList)" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                   <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                   <span class="ml-3">Todo List</span>
+                  <span class="inline-flex items-center justify-center  h-3 p-3 ml-3 text-sm font-medium text-blue-600 bg-walter-primary rounded-full dark:bg-blue-900 dark:text-blue-200">{{transactionListData.todo}}</span>
                 </a>
             </li>         
             <li>
                 <a href="#" @click="dashboardSelect(dashboardKeys.mlpMembersList)" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">Dupr Club</span>
-                  <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">212</span>
+                  <span class="inline-flex items-center justify-center  h-3 p-3 ml-3 text-sm font-medium text-blue-600 bg-walter-primary rounded-full dark:bg-blue-900 dark:text-blue-200">{{transactionListData.duprClub}}</span>
                 </a>
             </li>
             <li>
                 <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">Club Waitlist</span>
-                  <span class="inline-flex items-center justify-center  h-3 p-3 ml-3 text-sm font-medium text-blue-600 bg-walter-primary rounded-full dark:bg-blue-900 dark:text-blue-200">300</span>
+                  <span class="inline-flex items-center justify-center  h-3 p-3 ml-3 text-sm font-medium text-blue-600 bg-walter-primary rounded-full dark:bg-blue-900 dark:text-blue-200">{{transactionListData.waitList}}</span>
                 </a>
             </li>
             <li>
                 <a href="#" @click="dashboardSelect(dashboardKeys.userList)" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+                  <span class="inline-flex items-center justify-center  h-3 p-3 ml-3 text-sm font-medium text-blue-600 bg-walter-primary rounded-full dark:bg-blue-900 dark:text-blue-200">{{transactionListData.users}}</span>
                 </a>
             </li>
             <li>
@@ -73,17 +72,17 @@
       </div>
     </aside>
 
-    </div>
+  </div>
     <!-- Dropdown menu -->
+  </div>
+  
+  <div v-if="dashboardBools.todoList" class="col-span-9" >
+    <TodoList  :todoList="todoListMain"  @update="handleDocData" @delete="handleDocData"/>
   </div>
 
   <div v-if="dashboardBools.mlpMembersList" class="col-span-9">
     <MLPmembers/>
   </div>
-  
-    <div v-if="dashboardBools.todoList" class="col-span-9" >
-      <TodoList  :todoList="todoListMain"  @update="handleDocData" @delete="handleDocData"/>
-    </div>
   
   <div v-if="dashboardBools.eventsList" class="col-span-9">
     <EventsList :test='testData'  @deletus="handleDocDelete"/>
@@ -104,9 +103,10 @@ import EventsList from '@/components/EventsList.vue'
 import UserList from '@/components/UserList.vue'
 import getCollection from '@/composables/getCollection'
 import getUser from '../composables/getUser'
+import transactionCounter from '../composables/updateCounter'
 
 import {db} from '../firebase/config'
-import {doc, serverTimestamp, deleteDoc, updateDoc, deleteField} from 'firebase/firestore'
+import {doc, serverTimestamp, deleteDoc, updateDoc, deleteField, runTransaction} from 'firebase/firestore'
 
 import { onMounted, ref } from 'vue'
 import {
@@ -124,54 +124,65 @@ export default {
   
 
   setup() {
+    //dashboard v-if components
     const dashboardBools = ref({mlpMembersList : true, todoList: false, eventsList: false, userList: false})
+    //dashboard component key string pair for linking to vue logic
     const dashboardKeys = ref({mlpMembersList: 'mlp', todoList: 'todo', eventsList: 'events', userList: 'users'})
+    //dashboard data bool trigger for data singleton
     const dashboardDataBools = ref({mlpMembersList : true, todoList: false, eventsList: false, userList: false})
+    //holds docRefs for each component when data bool is triggered
     const docRefHolder = ref({mlpMembersList : {}, todoList: {}, eventsList: {}, userList: {}})
-
+    //temp data holders for components
     const todoListMain = ref({})
     const userListMain = ref({})
-
+    //used for incremental numbers in sidebar
+    const transactionListRef = doc(db, 'dataCounter', 'counters')
+    const transactionListData = ref({todo: 20})
+    //test dat delete later
     const testData = ref([{idkey: "loading", text: 'loading', priority: '1', timestamp: new Date()}])
     const testData2 = ref([{idkey: "beer", text: 'loading', priority: '1', timestamp: new Date()}])
-    //firestore data reads
+    //to count firestore data reads in testing
     const dataCalls = ref(0)
-
+    //get usered
     const {user} = getUser()
-    const selectedPerson = ref("Heya")
-    // const { documents:books } = getCollection('members', ['userUid', '==', user.value.uid]) 
-    // const { documents:members } = getCollection('walterMlp')    
     
+
+    // const { documents:books } = getCollection('members', ['userUid', '==', user.value.uid]) 
+    // const { documents:members } = getCollection('walterMlp') 
+
+     onMounted( async ()=>{
+      transactionListData.value = await loadDataDoc(transactionListRef)      
+    })
+    //handle doc delete no in use
     const handleDelete = (id)=>{
       const docRef = doc(db, 'walterMlp', id)
       deleteDoc(docRef)         
     }    
-
+    //handle doc udpate  not in use
     const handleUpdate = (member)=>{
       const docRef = doc(db, 'walterMlp', member.id)
       updateDoc(docRef, { isFav: !member.isFav })
     }
-     
-    const loadDataDoc = async ( doc)=>{
-        const {document} = await getDocument(doc)  
-        
+     //loads composable getDocument and returns its ref value
+    const loadDataDoc = async ( docRef)=>{
+        const {document, error} = await getDocument(docRef) 
+        if(error.value){
+          console.log(error.value)
+        }        
         return document.value                 
-    } 
-    onMounted(()=>{
-      //console.log('welcome admin')
-    })
+    }    
 
     //delete this event page simulator
     const simLoad = ()=>{      
       testData.value = testData2.value
     }
-    //Handles dashboard components limiting data to one time while on admin page
+    //Handles dashboard components data and v-if to limit data reads
     const dashboardSelect = async (panel)=>{
       dashboardBools.value.mlpMembersList = false
       dashboardBools.value.todoList = false
       dashboardBools.value.eventsList = false
       dashboardBools.value.userList = false
-      
+      //triggers which admin panel list will show in main view
       switch(panel){
         case 'mlp':  dashboardBools.value.mlpMembersList = true;
         break;
@@ -190,6 +201,8 @@ export default {
           userListMain.value = await loadDataDoc(docRefHolder.value.userList)
           dashboardDataBools.value.userList = true  } 
         break;
+        case 'waitlist': dashboardBools.value.mlpMembersList = true;
+        break;        
       }
     }
 
@@ -207,7 +220,9 @@ export default {
             await updateDoc(docRef, {
                 [fieldId]: deleteField()
             })
-           delete todoListMain.value[fieldId] 
+           delete todoListMain.value[fieldId]
+           transactionCounter('todo', -1)
+           transactionListData.value.todo = transactionListData.value.todo - 1
             dataCalls.value++                
       }
 
@@ -222,9 +237,7 @@ export default {
             //update the 
             await updateDoc(docRef, 
                  fieldObject
-            )
-            dataCalls.value++             
-            
+            ) 
             //spread new todo key to current list
             todoListMain.value = {...todoListMain.value, 
                 [fieldKey] : {
@@ -236,11 +249,12 @@ export default {
                     idkey: fieldKey
                 }                 
             }
-            
-      }
+           transactionListData.value.todo = transactionListData.value.todo + 1
+           transactionCounter('todo', 1)
+           dataCalls.value+= 3                
+      }     
 
-    
-    return { handleUpdate, handleDelete,handleDocDelete, handleDocData, dashboardSelect,todoListMain, testData, userListMain, dashboardKeys, dashboardBools, selectedPerson}
+    return { handleUpdate, handleDelete,handleDocDelete, handleDocData, dashboardSelect,transactionListData, todoListMain, testData, userListMain, dashboardKeys, dashboardBools}
   }
 }
 </script>

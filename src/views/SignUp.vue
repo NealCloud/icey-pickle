@@ -13,10 +13,7 @@
       <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
         <input type="hidden" name="remember" value="true" />
         <div class="-space-y-px rounded-md shadow-sm">
-          <div>
-            <label for="email-address" class="sr-only">Email address</label>
-            <input v-model="email" id="email-address" name="email" type="email" autocomplete="email" required="" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-walter-primary focus:outline-none focus:ring-walter-primary sm:text-sm" placeholder="Email address" />
-          </div>
+          
           <div>
             <label for="First Name" class="sr-only">First Name</label>
             <input v-model="first" id="first-name" name="first" type="text" autocomplete="First Name" required="" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-walter-primary focus:outline-none focus:ring-walter-primary sm:text-sm" placeholder="First Name" />
@@ -24,6 +21,10 @@
           <div>
             <label for="Last Name" class="sr-only">Last Name</label>
             <input v-model="last" id="first-name" name="last" type="text" autocomplete="Last Name" required="" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-walter-primary focus:outline-none focus:ring-walter-primary sm:text-sm" placeholder="Last Name" />
+          </div>
+          <div>
+            <label for="email-address" class="sr-only">Email address</label>
+            <input v-model="email" id="email-address" name="email" type="email" autocomplete="email" required="" class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-walter-primary focus:outline-none focus:ring-walter-primary sm:text-sm" placeholder="Email address" />
           </div>
           <div>
             <label for="password" class="sr-only">Password</label>
@@ -59,6 +60,7 @@
 </template>
 
 <script>
+import transactionCounter from '../composables/updateCounter'
 import { ref } from 'vue'
 import useSignup from '../composables/userSignUp'
 import { useRouter } from 'vue-router'
@@ -78,29 +80,14 @@ export default {
     const {signup, error, isPending, user} = useSignup()
     const router = useRouter()
 
-    const userQuickListRef = doc(db, "userRef", "mainList");    
-    const waitListRef = doc(db, "waitList", "mainList");
+    const userQuickListRef = doc(db, "userRef", "mainList")
+    const waitListRef = doc(db, "waitList", "mainList")
     const countersRef = doc(db, 'dataCounter', 'counters')
-
-    // const handleSubmit = async () => {
-    //   await signup(email.value, password.value)
-    //   if(!error.value){
-    //     const colRef = doc(db, 'users', user.value.uid)
-    //     await setDoc(colRef, {
-    //       first: first.value,
-    //       last: last.value,
-    //       email: email.value,
-    //       joinClub: joinClub.value,
-    //       userId: user.value.uid,
-    //       admin: user.value.uid
-    //     })      
-    //    router.push({name:'thankyou'})
-    //   }   
-    // }
 
     const handleSubmit = async () => { 
             await signup(email.value, password.value) 
-            if(!error.value){            
+            if(!error.value){ 
+            transactionCounter('users', 1)              
             let mainListRef = doc(db, "users", user.value.uid)
             //create new todo key data
              newUser.value = {                 
@@ -115,27 +102,28 @@ export default {
             await setDoc(mainListRef, newUser.value )
             //update firestore todo field
             await updateDoc(userQuickListRef, 
-                 {[user.value.uid] : {...newUser.value} }
-            ) 
+                 {[user.value.uid] : 
+                  {
+                    name: first.value + " " + last.value,
+                    email: email.value,
+                    userid: user.value.uid                 
+                  }  
+                }
+              ) 
             //if join club add to waitlist
             if(joinClub.value){
                await updateDoc(waitListRef, 
                 {[user.value.uid] : 
-                    {
-                      name: first.value + " " + last.value,
-                      email: email.value,
-                      userid: user.value.uid                 
-                    }                  
+                  {
+                    name: first.value + " " + last.value,
+                    email: email.value,
+                    userid: user.value.uid                 
                   }                  
-                )                 
-            }
-            // else{
-            //   await updateDoc(countersRef, {
-            //         users:  FieldValue.increment(1)                                   
-            //       }) 
-            // }
-           
-              router.push({name:'thankyou'}) 
+                }                  
+              )
+              transactionCounter("waitList", 1)                 
+            }         
+              router.push({name:'thankyou', params: {name: newUser.value.first}}) 
             }          
         }
 

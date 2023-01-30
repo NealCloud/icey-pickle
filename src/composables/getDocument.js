@@ -1,10 +1,10 @@
 import { ref} from 'vue'
 
-import { db } from '../firebase/config'
-import { doc, getDoc } from 'firebase/firestore'
+import {  getDoc } from 'firebase/firestore'
 
 
 const getDocument = async (docRef)=> {
+    const error = ref('')
 
     //const docRef = doc(db, docTitle, docMap1);
     const document = ref(null)             
@@ -12,12 +12,9 @@ const getDocument = async (docRef)=> {
     if (docSnap.exists()) {              
         document.value = ({ ...docSnap.data()})            
     } else {
-        // doc.data() will be undefined in this case
-        console.log(' doc does not exist');
+        error.value = 'doc does not exist'        // doc.data() will be undefined in this case        
     }
-
-
-    return { document }
+    return { document, error}
 }
 
 export default getDocument
