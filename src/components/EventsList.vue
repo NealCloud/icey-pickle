@@ -95,7 +95,7 @@ import { useRouter } from 'vue-router'
 
 export default {
   props: ['test'],
-   emits: ['addDupr'],
+   
   setup(props, context){
     const next = ref()
     const router = useRouter()

@@ -158,7 +158,7 @@ export default {
     // const { documents:members } = getCollection('walterMlp') 
 
      onMounted( async ()=>{
-      transactionListData.value = await loadDataDoc(transactionListRef)      
+      transactionListData.value = await loadDataDoc(transactionListRef, 'obj')      
     })
     //handle doc delete no in use
     const handleDelete = (id)=>{
@@ -171,8 +171,8 @@ export default {
       updateDoc(docRef, { isFav: !member.isFav })
     }
      //loads composable getDocument and returns its ref value
-    const loadDataDoc = async ( docRef)=>{
-        const {document, error} = await getDocument(docRef) 
+    const loadDataDoc = async ( docRef, typeString)=>{
+        const {document, error} = await getDocument(docRef, typeString) 
         if(error.value){
           console.log(error.value)
         }        
@@ -196,14 +196,15 @@ export default {
         case 'dupr':  dashboardBools.value.duprList = true;
         if(!dashboardDataBools.value.duprList){
           docRefHolder.value.duprList = doc(db, 'duprRef', 'mainList') 
-          duprListMain.value = await loadDataDoc(docRefHolder.value.duprList)
+          duprListMain.value = await loadDataDoc(docRefHolder.value.duprList, 'list')
           dashboardDataBools.value.duprList = true  }
+          
         break;
 
         case 'todo': dashboardBools.value.todoList = true
         if(!dashboardDataBools.value.todoList){
           docRefHolder.value.todoList = doc(db, 'todoList', 'mainList') 
-          todoListMain.value = await loadDataDoc(docRefHolder.value.todoList)
+          todoListMain.value = await loadDataDoc(docRefHolder.value.todoList, 'list')
           dashboardDataBools.value.todoList = true  }         
         break;
 
@@ -214,15 +215,16 @@ export default {
         case 'users': dashboardBools.value.userList = true;
         if(!dashboardDataBools.value.userList){
           docRefHolder.value.userList = doc(db, 'userRef', 'mainList') 
-          userListMain.value = await loadDataDoc(docRefHolder.value.userList)
+          userListMain.value = await loadDataDoc(docRefHolder.value.userList, 'list')
           dashboardDataBools.value.userList = true  } 
+          console.log('users list', userListMain.value)
         break;
 
         case 'waitList': dashboardBools.value.waitList = true;
         if(!dashboardDataBools.value.waitList){
           docRefHolder.value.waitList = doc(db, 'waitList', 'mainList') 
-          waitListMain.value = await loadDataDoc(docRefHolder.value.waitList)
-          dashboardDataBools.value.userList = true  }
+          waitListMain.value = await loadDataDoc(docRefHolder.value.waitList, 'list')
+          dashboardDataBools.value.waitList = true  }
         break;        
       }
 

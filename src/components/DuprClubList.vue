@@ -27,7 +27,7 @@
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
-        <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Names  Email ..." required>
+        <input v-model="searchWord"  class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Names  Email ..." required>
         <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
     </div>
 </form>
@@ -51,7 +51,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="member in duprList" :key=member.id class="bg-white border-b hover:bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
+            <tr v-for="member in filteredDupr" :key=member.id class="bg-white border-b hover:bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4  font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{member.name}}
                 </th>
@@ -62,7 +62,7 @@
                     {{member.phone}}
                 </td>                               
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> -->
                 </td>
             </tr>
                   
@@ -76,11 +76,12 @@ import { ref } from '@vue/reactivity'
 import getUser from '@/composables/getUser'
 import { addDoc, collection, getDocs, limit, query, serverTimestamp } from '@firebase/firestore'
 import { db } from '@/firebase/config'
-import { onMounted } from '@vue/runtime-core'
+import { computed, onMounted } from '@vue/runtime-core'
 import transactionCounter from '../composables/updateCounter'
 
 export default {
     props: ['duprList'],
+    emits: ['addDupr'],
     setup(props, context){       
         const members = [{id: 1, email: 'df', first: 'hey', last: 'mark', phone: 123}]
         const first = ref('')
@@ -88,12 +89,14 @@ export default {
         const email = ref('')
         const phone = ref('')
         const {user} = getUser()
+        const searchWord = ref('')
 
         const memberData = ref([])
         const mlpRef = collection(db, 'duprClub') 
 
         onMounted(()=>{
             //getMembers()
+            console.log('dupr club', props.duprList)
         })
 
         const handleSubmit = async () => {
@@ -126,6 +129,33 @@ export default {
                 transactionCounter('duprClub', 1)
         }
 
+        const filteredDupr = computed(() => {
+            const newData = ref([])
+           
+            for (const property in props.duprList) {
+                if(props.duprList[property].name.includes(searchWord.value)){
+                    newData.value.push({...props.duprList[property]})
+                }
+                        
+            }
+
+            // let tester = newData.value.filter((item)=>{
+            //     if(item.name.includes(searchWord)) return true
+            // })
+            
+            console.log(typeof newData.value, searchWord.value)
+            return newData.value
+            // for (const property in props.duprList) {
+            //     let keyPair = props.duprList[property]
+            //     if(keyPair.name.includes(searchWord.value)){
+            //         newData = {...newData, keyPair}
+            //     }           
+                    
+            // }
+            
+              
+        })
+
         const getMembers = async()=>{
             const memberFirst = query(collection(db, "walterMlp"), limit(2));
             const documentSnapshots = await getDocs(memberFirst);
@@ -134,7 +164,7 @@ export default {
             })
         }        
 
-        return {members, first, last, email, phone, memberData, handleSubmit}
+        return {members, first, last, email, phone, memberData, searchWord, filteredDupr, handleSubmit}
     }
 }
 </script>
