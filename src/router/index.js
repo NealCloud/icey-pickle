@@ -10,6 +10,7 @@ import SignUp from '../views/SignUp.vue'
 import DuprClub from '../views/DuprClub.vue'
 import Thankyou from '../views/Thankyou.vue'
 import Profile from '../views/Profile.vue'
+import Event from '../views/Event.vue'
 
 
 import { auth} from '../firebase/config'
@@ -92,6 +93,11 @@ const routes = [
     component: Profile
     
   },
+  {
+    path: '/event/:eventid',
+    name: 'event',
+    component: Event
+  }
 ]
 
 const router = createRouter({

@@ -128,7 +128,7 @@ export default {
                 } 
             }       
             console.log('sending todoObj:', newTodo.value)
-            context.emit('update', 'udpateTodo', newTodo.value)
+            context.emit('update', 'addTodo', newTodo.value)
 
             todoText.value = ''
             todoPriority.value = ''
