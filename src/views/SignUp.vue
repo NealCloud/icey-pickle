@@ -89,18 +89,23 @@ export default {
             if(!error.value){ 
             transactionCounter('users', 1)              
             let mainListRef = doc(db, "users", user.value.uid)
-            //create new todo key data
+            //create new user Object
              newUser.value = {                 
                     first: first.value,
                     last: last.value,
                     email: email.value,
                     joinClub: joinClub.value,
+                    clubMember: false,
                     userid: user.value.uid,
                     joined: serverTimestamp(),
-                    admin: 'false'               
+                    admin: 'false',
+                    title: 'level 1 pickler',
+                    phone: '',
+                    lessons: [],
+                    events: []               
             }
             await setDoc(mainListRef, newUser.value )
-            //update firestore todo field
+            //update firestore user Quick Refrence list
             await updateDoc(userQuickListRef, 
                  {[user.value.uid] : 
                   {
