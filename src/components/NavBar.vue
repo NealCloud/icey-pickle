@@ -167,7 +167,7 @@ export default{
           navAdmin.value = false
         }
         else{
-          if(user.value.uid == '37gKEAuWzfYbDk5d1Fq0aR158Oh2')
+          if(user.value.uid == '37gKEAuWzfYbDk5d1Fq0aR158Oh2' || user.value.uid == "34343")
           navAdmin.value = true
         }
       }) 

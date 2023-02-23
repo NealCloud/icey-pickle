@@ -11,6 +11,7 @@ import DuprClub from '../views/DuprClub.vue'
 import Thankyou from '../views/Thankyou.vue'
 import Profile from '../views/Profile.vue'
 import Event from '../views/Event.vue'
+import Media from '../views/MediaPage.vue'
 
 
 import { auth} from '../firebase/config'
@@ -97,6 +98,11 @@ const routes = [
     path: '/event/:eventid',
     name: 'event',
     component: Event
+  },
+  {
+    path: '/media',
+    name: 'media',
+    component: Media
   }
 ]
 
