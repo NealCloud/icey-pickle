@@ -76,6 +76,8 @@ import { ref } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
 import masterPic from '@/assets/masterHyunda.jpg'
 import arizonaPic from '@/assets/arizonaPPA.jpg'
+import osioShootOut from '@/assets/osioShootout.jpg'
+import appNewport from '@/assets/appNewport.jpg'
 import { onMounted, onUnmounted } from '@vue/runtime-core'
 
 export default {
@@ -100,19 +102,32 @@ export default {
     const myVideo = ref(null)
     const router = useRouter()
     const tournaList = ref([
-        // {
-        //     title:"The Hyundai Masters - Mission Hills, CA ",
-        //     pic: masterPic,
-        //     date:"January 12-15, 2023",
-        //     divs: [ {pro:"1/12 - Men's Singles Pro "},
-        //      {pro:"1/13 - Mixed Doubles Pro"},
-        //      {pro:"1/15 - Men's Doubles Pro"}
-        //      ],
-        //     urlMain: "https://www.ppatour.com/events/the-masters/",
-        //     urlMap: "https://www.google.com/maps?q=34600+Mission+Hills+Drive+Rancho+Mirage,+CA,+92270+United+States",
-        //     endBlurb: "",
-        //     id: 1
-        // },
+        {
+            title:"APP Newport Beach Open ",
+            pic: appNewport,
+            date:"June 28 - July 2, 2023",
+            divs: [ 
+                {pro:" Mixed Doubles Pro "},
+             {pro:"Men's Pro Doubles | Partner: Daniel Leiderman"}             
+             ],
+            urlMain: "https://apptour.org/usa-pickleball-announces-2023-national-championships-series-schedule/",
+            urlMap: "https://www.google.com/maps/place/11+Clubhouse+Dr,+Newport+Beach,+CA+92660/@33.6105566,-117.880961,16z/data=!4m6!3m5!1s0x80dce062f3e8d7c9:0x9e6f9a326b0349e9!8m2!3d33.6105789!4d-117.879813!16s%2Fg%2F11gfnz3wmm",
+            endBlurb: "Golden Ticket Tournament",
+            id: 4
+        },
+        {
+            title:"PPA Ogio Shootout - Newport Beach, CA ",
+            pic: osioShootOut,
+            date:"April 21-23, 2023",
+            divs: [ {pro:"4/21 - Mixed Doubles Pro "},
+             {pro:"4/22 - Men's Pro Doubles | Partner: Golden Tate"},
+             {pro:"4/23 - Championship Sunday"}
+             ],
+            urlMain: "https://www.ppatour.com/events/newport-beach-shootout/",
+            urlMap: "https://www.google.com/maps/place/11+Clubhouse+Dr,+Newport+Beach,+CA+92660/@33.6105566,-117.880961,16z/data=!4m6!3m5!1s0x80dce062f3e8d7c9:0x9e6f9a326b0349e9!8m2!3d33.6105789!4d-117.879813!16s%2Fg%2F11gfnz3wmm",
+            endBlurb: "Watch on CBS live! 4/22,   1-2pm",
+            id: 3
+        },
         {
             title:"The Carvana Arizona Grand Slam - Mesa, AZ ",
             pic: arizonaPic,
@@ -126,7 +141,20 @@ export default {
             urlMap: "https://www.google.com/maps/place/Bell+Bank+Park/@33.298451,-111.626002,745m/data=!3m2!1e3!4b1!4m5!3m4!1s0x0:0x8f58ae0ae6c6013b!8m2!3d33.298451!4d-111.626002",
             endBlurb: "Thank you for your support!",
             id: 2
-         }
+         },
+         {
+            title:"The Hyundai Masters - Mission Hills, CA ",
+            pic: masterPic,
+            date:"January 12-15, 2023",
+            divs: [ {pro:"1/12 - Men's Singles Pro "},
+             {pro:"1/13 - Mixed Doubles Pro"},
+             {pro:"1/15 - Men's Doubles Pro"}
+             ],
+            urlMain: "https://www.ppatour.com/events/the-masters/",
+            urlMap: "https://www.google.com/maps?q=34600+Mission+Hills+Drive+Rancho+Mirage,+CA,+92270+United+States",
+            endBlurb: "",
+            id: 1
+        },
          ])
        
          

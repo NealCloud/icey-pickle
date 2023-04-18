@@ -196,6 +196,12 @@ export default{
             href: 'tournaments',
             icon: ShieldCheckIcon,
             id: 4
+        },
+        {
+            name: 'Media',
+            href: 'media',
+            icon: ShieldCheckIcon,
+            id: 5
         }
       ]
         
