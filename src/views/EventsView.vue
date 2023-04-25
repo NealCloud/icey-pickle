@@ -14,9 +14,9 @@
   <div class="grid grid-cols-6 grid-rows-auto gap-4 m-4">
    <!-- first half -->
     <div class="col-span-full md:col-span-4">
-       <p class="glow text-4xl p-6">Soon to be updated with
-        <span class="text-indigo-500">DUPR</span>
-       Events and Club Clinics near you!</p> 
+       <p class="glow text-4xl p-6">Ongoing updates
+        <span class="text-indigo-500">DUPR </span>
+       Clinics and Camps!</p> 
        <div>        
       </div>
               <!-- Middle Pic Offset  -->       
@@ -26,8 +26,8 @@
       <div class="col-span-full md:col-span-2  ">
         <p class="grow club text-3xl">Events</p>        
       <div class="h-28 m-4 dupr rounded-lg overflow-hidden border-2 shadow-sm flex justify-between items-center  bg-slate-50 ">         
-          <img src="../assets/bayclub2.jpg" class="object-cover  w-24 " alt="DUPR iOS App">
-          <div class="text-2xl font-medium mr-6">
+          <img src="../assets/elcamino.png" class="aspect-square  w-24 " alt="DUPR iOS App">
+          <div class="text-xl font-medium mr-6">
             <button v-for="(clinic,index) in clinics"  :key="index" >
               <input class="sr-only peer" name="size" type="radio" value="s" checked />
               <div class=" gap-x-0.5 text-slate-900 ">
@@ -37,11 +37,11 @@
         </div>
       </div>
       <div class="h-28 m-4 dupr rounded-lg overflow-hidden border-2 shadow-sm flex justify-between  items-center bg-slate-50 ">         
-          <img src="../assets/duprTeam1.png" class="object-cover w-44" alt="DUPR iOS App">
+          <img src="../assets/elcamino.png" class=" w-24 aspect-square" alt="DUPR iOS App">
           <button>
           
           <div class="mr-6">           
-              <p  class="text-2xl">DUPR Events</p>           
+              <p  class="text-xl">Memorial Day Live Ball Event - 6/27</p>           
           </div> 
           </button>
       </div>      
@@ -59,7 +59,9 @@
 export default {
     data(){ 
       return {
-        clinics : [{name: "Clinic Events"}]
+        clinics : [
+          {name: "Live Ball Fridays 11:30 El Camino Country Club"}          
+        ]
       }
     }
 }

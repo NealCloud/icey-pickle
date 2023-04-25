@@ -107,8 +107,9 @@ export default {
             pic: appNewport,
             date:"June 28 - July 2, 2023",
             divs: [ 
-                {pro:" Mixed Doubles Pro "},
-             {pro:"Men's Pro Doubles | Partner: Daniel Leiderman"}             
+                {pro:"6/29 - Men's Singles Pro "},
+                {pro:"6/30 - Mixed Doubles Pro "},
+             {pro:"7/1 - Men's Doubles Pro | Partner: Daniel Leiderman"}             
              ],
             urlMain: "https://apptour.org/usa-pickleball-announces-2023-national-championships-series-schedule/",
             urlMap: "https://www.google.com/maps/place/11+Clubhouse+Dr,+Newport+Beach,+CA+92660/@33.6105566,-117.880961,16z/data=!4m6!3m5!1s0x80dce062f3e8d7c9:0x9e6f9a326b0349e9!8m2!3d33.6105789!4d-117.879813!16s%2Fg%2F11gfnz3wmm",
@@ -119,8 +120,8 @@ export default {
             title:"PPA Ogio Shootout - Newport Beach, CA ",
             pic: osioShootOut,
             date:"April 21-23, 2023",
-            divs: [ {pro:"4/21 - Mixed Doubles Pro "},
-             {pro:"4/22 - Men's Pro Doubles | Partner: Golden Tate"},
+            divs: [ {pro:"4/21 - Mixed Doubles "},
+             {pro:"4/22 - Men's Doubles 5.0 | Partner: Golden Tate"},
              {pro:"4/23 - Championship Sunday"}
              ],
             urlMain: "https://www.ppatour.com/events/newport-beach-shootout/",
